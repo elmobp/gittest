@@ -14,8 +14,10 @@ jobs:
     - run: 'sudo apt -y install git'
     - run: 'echo "StrictHostKeyChecking no" > ~/.ssh/config'
     - run: 'echo "UserKnownHostsFile=/dev/null" >> ~/.ssh/config'
+    - run: 'git config --global user.email "lidder86@gmail.com"'
+    - run: 'git config --global user.name "Michael Baker"'
     - run: |
-        for Y in {1999..2018}
+        for Y in {1986..2020}
         do
           mkdir $Y
           cd $Y
