@@ -10,8 +10,8 @@ jobs:
         ssh-key: ${{ secrets.SSH_KEY }}
     - run: 'echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa'
     - run: 'chmod 600 ~/.ssh/id_rsa'
-    - run: 'apt update'
-    - run: 'apt -y install git'
+    - run: 'sudo apt update'
+    - run: 'sudo apt -y install git'
     - run: 'echo "StrictHostKeyChecking no" > ~/.ssh/config'
     - run: 'echo "UserKnownHostsFile=/dev/null" >> ~/.ssh/config'
     - run: |
