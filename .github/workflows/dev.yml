@@ -1,0 +1,50 @@
+name: Fun time
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ssh-key: ${{ secrets.SSH_KEY }}
+    - run: 'echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa'
+    - run: 'chmod 600 ~/.ssh/id_rsa'
+    - run: 'sudo apt update'
+    - run: 'sudo apt -y install git'
+    - run: 'echo "StrictHostKeyChecking no" > ~/.ssh/config'
+    - run: 'echo "UserKnownHostsFile=/dev/null" >> ~/.ssh/config'
+    - run: 'git config --global user.email "lidder86@gmail.com"'
+    - run: 'git config --global user.name "Michael Baker"'
+    - run: |
+        for Y in {1986..2020}
+        do
+          mkdir $Y
+          cd $Y
+          for M in {01..12}
+          do
+            mkdir $M
+            cd $M
+            for D in {01..31}
+            do
+              mkdir $D
+              cd $D
+              for i in {01..12}
+              do
+                echo "$i on $M/$D/$Y" > commit.md
+                export GIT_COMMITTER_DATE="$Y-$M-$D 12:$i:00"
+                export GIT_AUTHOR_DATE="$Y-$M-$D 12:$i:00"
+                git add commit.md -f
+                git commit --date="$Y-$M-$D 12:0$i:00" -m "$i on $M $D $Y" -m "@davidxdbp hello"
+              done
+              cd ../
+            done
+            cd ../
+          done
+          cd ../
+        done
+        git push origin master
+        git rm -rf 20**
+        git rm -rf 19**
+        git commit -am "cleanup"
+        git push origin master
