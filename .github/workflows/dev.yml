@@ -8,6 +8,8 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ssh-key: ${{ secrets.SSH_KEY }}
+    - run: "mkdir ~/.ssh"
+    - run: "chmod 600 ~/.ssh"
     - run: 'echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa'
     - run: 'chmod 600 ~/.ssh/id_rsa'
     - run: 'sudo apt update'
